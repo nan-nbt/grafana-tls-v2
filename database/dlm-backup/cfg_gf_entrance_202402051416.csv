@@ -1,0 +1,13 @@
+"entre_id","entre_name","enable","url","img","main"
+E002_1,Sole Manufacture,N,https://pcag-dashboard-q.pouchen.com/d/a519e598-9c95-4ea9-adc7-c790b6b1fb30/solemanufacturev2?orgId=1,/public/img/portal/sole/sole-pp-pyv.png,
+E003_1,Shoe Manufacture,N,https://pcag-dashboard-q.pouchen.com/d/b6484fe9-7cd4-4fae-a6e2-8fce1c7f98ba/all-type?orgId=1,/public/img/portal/shoe/shoe-pp-pyv.png,""
+E002_3,Sole Manufacture,N,https://pcag-dashboard-q.pouchen.com/d/a0ded782-5978-472c-91e3-8bb313d5416e/solemanufacture-pci?orgId=1,/public/img/portal/sole/sole-pp-pci.png,""
+E002_2,Sole Manufacture,N,https://pcag-dashboard-q.pouchen.com/d/a4cb5276-c03a-427f-99fc-d05900f16cfa/solemanufacture-psv,/public/img/portal/sole/sole-pp-psv.png,
+E001,TLS,Y,https://pcag-dashboard.pouchen.com/d/e6d0706e-ec85-4015-b971-bb7b1465aa0b/tls-portal?orgId=1,/public/img/portal/TLS.svg,Y
+E004,WMS,Y,#,/public/img/portal/WMS.svg,Y
+E002,Sole Manufacture,N,https://pcag-dashboard-q.pouchen.com/d/c817a445-3426-4b5d-b797-ca2e3a090380/sole-portal?orgId=1,/public/img/portal/Sole-pp.svg,Y
+E003,Shoe Manufacture,N,https://pcag-dashboard-q.pouchen.com/d/e7689777-6660-4eda-b86f-16c0fbd73213/shoe-portal?orgId=1,/public/img/portal/Shoe-pp.svg,Y
+E001_1,TLS | A-1 Visualization,Y,https://pcag-dashboard.pouchen.com/d/L2kg00u4z/tls-2-0-a-1?orgId=1,/public/img/portal/tls/A-1.svg,""
+E001_2,TLS | A-2 RFT Pass Trend,Y,https://pcag-dashboard.pouchen.com/d/eqKR_b94k/tls-2-0-a-2?orgId=1,/public/img/portal/tls/A-2.svg,""
+E001_3,TLS | A-3 Top 5 RFT Defect,Y,https://pcag-dashboard.pouchen.com/d/YDERuxr4k/tls-2-0-a-3?orgId=1,/public/img/portal/tls/A-3.svg,""
+E001_4,TLS | B-2 RFT Defect,Y,https://pcag-dashboard.pouchen.com/d/Lg8MCoq4k/tls-2-0-b-2?orgId=1,/public/img/portal/tls/B-2.svg,""

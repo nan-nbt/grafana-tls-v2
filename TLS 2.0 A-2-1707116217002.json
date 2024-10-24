@@ -1,0 +1,473 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 11,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "dashboard",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Home",
+      "tooltip": "Home",
+      "type": "link",
+      "url": "https://pcag-dashboard.pouchen.com/d/af6b8102-0bf4-4b41-9da7-0801db25d862/main-portal?orgId=1"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Back",
+      "tooltip": "Back",
+      "type": "link",
+      "url": "https://pcag-dashboard.pouchen.com/d/e6d0706e-ec85-4015-b971-bb7b1465aa0b/tls-portal?orgId=1"
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<script>\n  let userRole = window.grafanaBootData.user.orgRole;\n\n  if (userRole != 'Admin') {\n    let breadcrumbs = document.querySelector('[aria-label=\"Breadcrumbs\"]');\n    let toggle = document.querySelector('[aria-label=\"Toggle menu\"]');\n    let markFavoriteIcon = document.querySelector('[aria-label=\"Mark as favorite\"]');\n    let shareIcon = document.querySelector('[aria-label=\"Share dashboard or panel\"]');\n    //hard coce..\n    let headerBlocks = document.querySelectorAll('[data-testid=\"wrapper\"]');\n\n    //hide dom if exists\n    if (breadcrumbs){\n      breadcrumbs.style.display = 'none';\n    }\n    if (toggle) {\n      toggle.style.display = 'none';\n    }\n    if (markFavoriteIcon) {\n      markFavoriteIcon.style.display = 'none';\n    }\n    if (shareIcon){\n      shareIcon.style.display = 'none';\n    }\n\n    if (headerBlocks.length > 0) {\n      //keep dom's space\n      headerBlocks[1].style.visibility = 'hidden';\n    }\n  }\n</script>",
+        "mode": "html"
+      },
+      "pluginVersion": "10.1.2",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 9,
+        "w": 16,
+        "x": 0,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "baidu": {
+          "callback": "bmapReady",
+          "key": ""
+        },
+        "editor": {
+          "format": "auto",
+          "height": 600
+        },
+        "gaode": {
+          "key": "",
+          "plugin": "AMap.Scale,AMap.ToolBar"
+        },
+        "getOption": "let names = [];\nlet amounts = [];\n\ndata.series.forEach((s) => {\n  if (s.refId === 'TLS_RFT_DATA') {\n    const rftDateField = s.fields.find((f) => f.name === 'rft_date');\n    const rftDataField = s.fields.find((f) => f.name === 'rft_data');\n\n    if (rftDateField && rftDataField) {\n      names = rftDateField.values;\n      amounts = rftDataField.values;\n    }\n    // Handle the case where either rftDateField or rftDataField is undefined\n  }\n});\n\nlet option = {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'axis',\n    axisPointer: {\n      type: 'shadow'\n    },\n    formatter: function (obj) {\n      //console.log(obj[0].axisValue);\n      return obj[0].axisValue.substring(2, 4) + '-' +\n        obj[0].axisValue.substring(0, 2) +\n        '<br/> RFT : ' + obj[0].value.toFixed(2) + '%'\n    },\n  },\n  grid: {\n    bottom: \"3%\",\n    containLabel: true,\n    left: \"3%\",\n    right: \"4%\",\n    top: \"4%\"\n  },\n  xAxis: {\n    type: 'category',\n    data: names,\n    axisLabel: {\n      formatter: function (obj, idx) {\n        let dateMonth = obj.substring(0, 2) + ' - ' + obj.substring(2, 4);\n        return dateMonth;\n      },\n    }\n\n  },\n  yAxis: {\n    type: 'value',\n    max: 100,\n  },\n  series: [\n    {\n      data: amounts,\n      type: 'bar',\n      showBackground: true,\n      backgroundStyle: {\n        color: 'rgba(180, 180, 180, 0.2)'\n      },\n      itemStyle: {\n        //borderColor: 'transparent',\n        color: function (params) {\n          //console.log(params.data);\n          if (params.data < 80) {\n            return '#DC3545';\n          } else if (params.data >= 80 && params.data < 90) {\n            return '#FFC107';\n          } else if (params.data >= 90) {\n            return '#28A745';\n          }\n\n        }\n      }\n    }\n  ]\n};\n\nreturn option;",
+        "google": {
+          "callback": "gmapReady",
+          "key": ""
+        },
+        "map": "none",
+        "renderer": "canvas",
+        "themeEditor": {
+          "config": "{}",
+          "height": 400,
+          "name": "default"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "bb8837e5-4422-4bb8-ba5f-22025da64379"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select\r\n  sum(\r\n    case\r\n      when insp <> 0 then pass / insp * 100\r\n      else 0\r\n    end\r\n  ) as RFT_Data,\r\n  RFT_Date\r\nfrom\r\n  (\r\n    select\r\n      sum(a.inspection_qty) as insp,\r\n      sum(a.pass_qty) as pass,\r\n      substr(cast(a.inspection_date as varchar), 5, 4) as RFT_Date\r\n    from\r\n      qmgt_rdb.tls_gf_inspection a\r\n      inner join qmgt_rdb.cfg_mes_gf_aopgroupctrl b on a.fact_no_merge = b.fact_no_merge\r\n      and a.opgroup_id = b.opgroup_id\r\n    where\r\n      a.fact_no_merge = '$factory'\r\n      and substr(cast(a.inspection_date as varchar), 0, 9) between '${__from:date:YYYYMMDD}'\r\n      and '${__to:date:YYYYMMDD}'\r\n      and b.mainlineno = '$sec_no'\r\n      and b.\"enable\" = 'Y'\r\n    group by\r\n      substr(cast(a.inspection_date as varchar), 5, 4)\r\n  ) as sub\r\ngroup by\r\n  rft_date\r\norder by\r\n  rft_date asc;",
+          "refId": "TLS_RFT_DATA",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "RFT Pass Trend ${sec_no} | ${__from:date:YYYY-MM-DD} ~ ${__to:date:YYYY-MM-DD}",
+      "type": "volkovlabs-echarts-panel"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 4,
+      "options": {
+        "content": "<table align=\"center\" style=\"board:0px;font-size:24px\">\n{{#each data}}\n  <tr style=\"board:0px\">\n    <td style=\"board:0px\">Check Quantity : </td>\n    <td>{{c1}}</td>\n  </tr>\n  <tr style=\"board:0px\">\n    <td style=\"board:0px; color:{{c4}}\">Defect Quantity</td>\n    <td>{{c2}}</td>\n  </tr>\n  <tr style=\"board:0px\">\n    <td style=\"board:0px; color:{{c4}}\">Defect Rate</td>\n    <td>{{c3}}</td>\n  </tr style=\"board:0px\">\n{{/each}}\n</table>",
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "height": 200,
+          "language": "markdown"
+        },
+        "editors": [],
+        "everyRow": false,
+        "helpers": "",
+        "styles": ""
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "bb8837e5-4422-4bb8-ba5f-22025da64379"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select\r\n  rft.insp as c1,\r\n  rft.def as c2,\r\n  concat(round(rft.def / rft.insp * 100, 2), '%') as c3\r\nfrom\r\n  (\r\n    select\r\n      sum(a.inspection_qty) as insp,\r\n      sum(a.defect_qty) as def\r\n    from\r\n      qmgt_rdb.tls_gf_inspection a\r\n      inner join qmgt_rdb.cfg_mes_gf_aopgroupctrl b on a.fact_no_merge = b.fact_no_merge\r\n      and a.opgroup_id = b.opgroup_id\r\n    where\r\n      a.fact_no_merge = '$factory'\r\n      and a.inspection_date between '${__from:date:YYYYMMDD}'\r\n      and '${__to:date:YYYYMMDD}'\r\n      and a.process_id = '$process'\r\n      and a.defect_qty <> 0\r\n      and b.\"enable\" = 'Y'\r\n      and b.mainlineno = '$sec_no'\r\n  ) rft;",
+          "refId": "RFT_DEFECT",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Defect $process",
+      "type": "marcusolsson-dynamictext-panel"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "bb8837e5-4422-4bb8-ba5f-22025da64379"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 6,
+      "options": {
+        "baidu": {
+          "callback": "bmapReady",
+          "key": ""
+        },
+        "editor": {
+          "format": "auto",
+          "height": 600
+        },
+        "gaode": {
+          "key": "",
+          "plugin": "AMap.Scale,AMap.ToolBar"
+        },
+        "getOption": "let cpName = [];\nlet cpValue = [];\nlet cpRate = [];\n\ndata.series.forEach((s) => {\n  const cpNameField = s.fields.find((f) => f.name === 'cpname');\n  const cpValueField = s.fields.find((f) => f.name === 'cpvalue');\n  // const cpRateField = s.fields.find((f) => f.name === 'cpRate');\n\n  if (cpNameField && cpValueField) {\n    cpName = cpNameField.values;\n    cpValue = cpValueField.values;\n    // Handle the case where cpRateField is undefined, if needed\n    // cpRate = cpRateField ? cpRateField.values.buffer : [];\n  }\n  // Handle the case where either cpNameField or cpValueField is undefined\n});\n\nvar arr = [];\n\nvar arrayLength = cpName.length;\nfor (var i = 0; i < arrayLength; i++) {\n  //var item = { value: cpValue[i], name: cpRate[i] + '% ' + cpName[i] };\n  var item = { value: cpValue[i], name: cpName[i] };\n  arr.push(item);\n}\n\n//alert(arr);\n\nlet option = {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'item',\n    formatter: '{b} <br/> {c} ({d}%)'\n    //formatter: function () { },\n  },\n  /*\n  legend: {\n    type: 'scroll',\n    //orient: 'horizontal',\n    orient: 'vertical',\n    align: 'left',\n    left: 10,\n    top: 20,\n    bottom: 20,\n    data: arr.name,\n    show: false,\n  },\n  */\n  series: [\n    {\n      name: 'Critical Process',\n      type: 'pie',\n      radius: '65%',\n      center: ['50%', '50%'],\n      /*\n      data: [\n        { value: 831, name: '39.18% Back part molding' },\n        { value: 740, name: 'Stroble sitiching' },\n        { value: 358, name: 'Buffing' },\n        { value: 147, name: 'Gauge Marking' },\n        { value: 45, name: 'Arriance stitch' }\n      ],\n      */\n      data: arr,\n      label: {\n        //formatter: '{d.0f}%\\n{b}',\n\n        formatter: function (obj) {\n          //console.log(data.percent);\n          //return '123';\n          return obj.percent.toFixed(0) + '%\\n' + obj.data.name;\n        },\n        fontSize: 14,\n        //alignTo: 'edge',\n        alignTo: 'labelLine',\n        position: 'outer',\n        edgeDistance: '10%',\n        grid: { containLabel: true },\n      },\n      labelLine: {\n        lineStyle: {\n          width: 3,\n        }\n      },\n      emphasis: {\n        itemStyle: {\n          shadowBlur: 10,\n          shadowOffsetX: 0,\n          shadowColor: 'rgba(0, 0, 0, 0.5)'\n        }\n      }\n    }\n  ]\n};\n\nreturn option;",
+        "google": {
+          "callback": "gmapReady",
+          "key": ""
+        },
+        "map": "none",
+        "renderer": "canvas",
+        "themeEditor": {
+          "config": "{}",
+          "height": 400,
+          "name": "default"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "bb8837e5-4422-4bb8-ba5f-22025da64379"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select\r\n  concat(c.process_no, ' | ', c.process_desc) as cpname,\r\n  sum(a.defect_qty) as cpvalue\r\nfrom\r\n  qmgt_rdb.tls_gf_inspection a\r\n  inner join qmgt_rdb.tls_gf_inspection_defect b on a.tls_inspection_id = b.tls_inspection_id\r\n  inner join qmgt_rdb.cfg_gf_process c on a.process_id = c.process_id\r\n  inner join qmgt_rdb.cfg_mes_gf_aopgroupctrl d on a.opgroup_id = d.opgroup_id\r\n  inner join qmgt_rdb.cfg_gf_fact_process e on c.process_id = e.process_id\r\n  and d.line_type = e.line_type\r\nwhere\r\n  a.fact_no_merge = '$factory'\r\n  and a.inspection_date between '${__from:date:YYYYMMDD}'\r\n  and '${__to:date:YYYYMMDD}'\r\n  and c.\"enable\" = 'Y'\r\n  and d.\"enable\" = 'Y'\r\n  and e.\"enable\" = 'Y'\r\ngroup by\r\n  c.process_desc,\r\n  c.process_id\r\norder by\r\n  cpvalue desc, cpname desc\r\nlimit\r\n  5;",
+          "refId": "CRITICAL_PROCESS",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Top 5 Critical Process | ${__from:date:YYYY-MM-DD} ~ ${__to:date:YYYY-MM-DD}",
+      "type": "volkovlabs-echarts-panel"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Mixed --"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 10
+      },
+      "id": 8,
+      "options": {
+        "baidu": {
+          "callback": "bmapReady",
+          "key": ""
+        },
+        "editor": {
+          "format": "auto",
+          "height": 600
+        },
+        "gaode": {
+          "key": "",
+          "plugin": "AMap.Scale,AMap.ToolBar"
+        },
+        "getOption": "let cpName = [];\nlet cpValue = [];\nlet cpRate = [];\nlet dvLine = '';\nlet work_center = '';\n\ndata.series.forEach((s) => {\n  if (s.refId === 'TOP5DEFECT') {\n    const tdNameField = s.fields.find((f) => f.name === 'tdname');\n    const tdValueField = s.fields.find((f) => f.name === 'tdvalue');\n\n    if (tdNameField && tdValueField) {\n      cpName = tdNameField.values;\n      cpValue = tdValueField.values;\n      // Handle the case where tdRateField is undefined, if needed\n      // cpRate = tdRateField ? tdRateField.values.buffer : [];\n    }\n    // Handle the case where either tdNameField or tdValueField is undefined\n  } else if (s.refId === 'DATA_SECTION') {\n    const workcenterField = s.fields.find((f) => f.name === 'workcenter');\n\n    if (workcenterField) {\n      work_center = workcenterField.values;\n    }\n    // Handle the case where workcenterField is undefined\n  }\n});\n\nvar arr = [];\n\n\nvar arrayLength = cpName.length;\nfor (var i = 0; i < arrayLength; i++) {\n  //var item = { value: cpValue[i], name: cpRate[i].toFixed(0) + '% ' + cpName[i] };\n  var item = { value: cpValue[i], name: cpName[i] };\n  arr.push(item);\n}\n\n\nlet option = {\n  backgroundColor: 'transparent',\n  tooltip: {\n    trigger: 'item'\n  },\n  series: [\n    {\n      name: replaceVariables(\"${sec_no2:text}\") + '(' + work_center + ')',\n      type: 'pie',\n      radius: '65%',\n      /*\n      data: [\n        { value: 1048, name: 'Search Engine' },\n        { value: 735, name: 'Direct' },\n        { value: 580, name: 'Email' },\n        { value: 484, name: 'Union Ads' },\n        { value: 300, name: 'Video Ads' }\n      ],\n      */\n      data: arr,\n      emphasis: {\n        itemStyle: {\n          shadowBlur: 10,\n          shadowOffsetX: 0,\n          shadowColor: 'rgba(0, 0, 0, 0.5)'\n        }\n      },\n      label: {\n        formatter: function (obj) {\n          return obj.percent.toFixed(0) + '%\\n' + obj.data.name;\n        },\n        fontSize: 14,\n        //width: 200,\n        alignTo: 'labelLine',\n        position: 'outer',\n        edgeDistance: '10%'\n      },\n      labelLine: {\n        lineStyle: {\n          width: 2.5,\n        }\n      },\n    }\n  ]\n};\n\nreturn option;",
+        "google": {
+          "callback": "gmapReady",
+          "key": ""
+        },
+        "map": "none",
+        "renderer": "canvas",
+        "themeEditor": {
+          "config": "{}",
+          "height": 400,
+          "name": "default"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "bb8837e5-4422-4bb8-ba5f-22025da64379"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "select\r\n  c.defect_desc as tdname,\r\n  SUM(b.defect_num) as tdvalue\r\nfrom\r\n  qmgt_rdb.tls_gf_inspection a\r\n  inner join qmgt_rdb.tls_gf_inspection_defect b on a.tls_inspection_id = b.tls_inspection_id\r\n  inner join qmgt_rdb.cfg_gf_defect c on b.defect_id = c.defect_id\r\n  inner join qmgt_rdb.cfg_mes_gf_aopgroupctrl d on a.fact_no_merge = d.fact_no_merge\r\n  and a.opgroup_id = d.opgroup_id\r\nWHERE\r\n  a.fact_no_merge = '$factory'\r\n  and a.inspection_date between '${__from:date:YYYYMMDD}'\r\n  and '${__to:date:YYYYMMDD}'\r\n  and c.\"enable\" = 'Y'\r\n  and d.\"enable\" = 'Y'\r\n  and d.mainlineno = '$sec_no'\r\ngroup by\r\n  c.defect_desc\r\norder by\r\n  tdvalue desc, tdname desc\r\nlimit\r\n  5;",
+          "refId": "TOP5DEFECT",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "bb8837e5-4422-4bb8-ba5f-22025da64379"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "select\r\n  mainlineno as workcenter,\r\n  line_type as linetype\r\nfrom\r\n  qmgt_rdb.cfg_mes_gf_aopgroupctrl\r\nwhere\r\n  fact_no_merge = '$factory'\r\n  and opgroup_id = '$sec_no'\r\n  and \"enable\" = 'Y'\r\ngroup by\r\n  mainlineno,\r\n  line_type;",
+          "refId": "DATA_SECTION",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Top 5 Defect ${sec_no} | ${__from:date:YYYY-MM-DD} ~ ${__to:date:YYYY-MM-DD}",
+      "type": "volkovlabs-echarts-panel"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "5010 - PCI",
+          "value": "5010"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "d35b1763-fe1a-425a-81d1-af3305303af0"
+        },
+        "definition": "select concat(f.fact_no, '#', f.fact_no, ' - ', f.fact_name)\n\tfrom cfg_user a\n\tinner join (select distinct group_id, user_pccuid from (\n\t\tselect group_id, user_pccuid from cfg_group_member \n\t\tunion all\n\t\tselect group_id, user_pccuid from cfg_group_mgr cgm \n\t\t) as group_user) b\n\t\ton a.user_pccuid = b.user_pccuid\n\tinner join cfg_group c\n\t\ton b.group_id = c.group_id \n\tinner join cfg_auth_board d \n\t\ton b.group_id = d.group_id and c.group_id = d.group_id\n\tinner join cfg_auth_dp_fact e \n\t\ton d.auth_board_id = e.auth_board_id \n\tinner join cfg_fact f\n\t\ton e.fact_id = f.fact_id  \n\tinner join cfg_board_dp_fact g\n\t\ton d.board_id = g.board_id and f.fact_id = g.fact_id and e.fact_id = g.fact_id  \n\tinner join cfg_board h \n\t\ton g.board_id = h.board_id \n\twhere a.user_pccuid = '${__user.login}'\n\tand a.enabled = 'Y'\n\tand f.enabled = 'Y'\n\tand f.fact_no <> '2151'\n\tand h.enabled = 'Y'\n\tand h.board_level = 1\n\tand h.board_gf_id = '${__dashboard.uid}'\n\tgroup by f.fact_no, f.fact_name \n\torder by f.fact_no, f.fact_name \n;",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Factory",
+        "multi": false,
+        "name": "factory",
+        "options": [],
+        "query": "select concat(f.fact_no, '#', f.fact_no, ' - ', f.fact_name)\n\tfrom cfg_user a\n\tinner join (select distinct group_id, user_pccuid from (\n\t\tselect group_id, user_pccuid from cfg_group_member \n\t\tunion all\n\t\tselect group_id, user_pccuid from cfg_group_mgr cgm \n\t\t) as group_user) b\n\t\ton a.user_pccuid = b.user_pccuid\n\tinner join cfg_group c\n\t\ton b.group_id = c.group_id \n\tinner join cfg_auth_board d \n\t\ton b.group_id = d.group_id and c.group_id = d.group_id\n\tinner join cfg_auth_dp_fact e \n\t\ton d.auth_board_id = e.auth_board_id \n\tinner join cfg_fact f\n\t\ton e.fact_id = f.fact_id  \n\tinner join cfg_board_dp_fact g\n\t\ton d.board_id = g.board_id and f.fact_id = g.fact_id and e.fact_id = g.fact_id  \n\tinner join cfg_board h \n\t\ton g.board_id = h.board_id \n\twhere a.user_pccuid = '${__user.login}'\n\tand a.enabled = 'Y'\n\tand f.enabled = 'Y'\n\tand f.fact_no <> '2151'\n\tand h.enabled = 'Y'\n\tand h.board_level = 1\n\tand h.board_gf_id = '${__dashboard.uid}'\n\tgroup by f.fact_no, f.fact_name \n\torder by f.fact_no, f.fact_name \n;",
+        "refresh": 2,
+        "regex": "/(?<value>.*)#(?<text>.*)/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "A-1-1",
+          "value": "ASA01010"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "bb8837e5-4422-4bb8-ba5f-22025da64379"
+        },
+        "definition": " select concat(a.mainlineno,'#',a.sublineno) linesec\n from qmgt_rdb.cfg_mes_gf_aopgroupctrl a\n inner join qmgt_rdb.cfg_gf_fact b\n \ton a.fact_no_merge = b.fact_no_merge \n where a.fact_no_merge = '$factory'\n and a.stepname = 'ASB'\n and a.\"enable\" = 'Y'\n and b.\"enable\" = 'Y'\n group by a.mainlineno, a.sublineno \n order by a.mainlineno asc\n;\n",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Line Section",
+        "multi": false,
+        "name": "sec_no",
+        "options": [],
+        "query": " select concat(a.mainlineno,'#',a.sublineno) linesec\n from qmgt_rdb.cfg_mes_gf_aopgroupctrl a\n inner join qmgt_rdb.cfg_gf_fact b\n \ton a.fact_no_merge = b.fact_no_merge \n where a.fact_no_merge = '$factory'\n and a.stepname = 'ASB'\n and a.\"enable\" = 'Y'\n and b.\"enable\" = 'Y'\n group by a.mainlineno, a.sublineno \n order by a.mainlineno asc\n;\n",
+        "refresh": 2,
+        "regex": "/(?<value>.*)#(?<text>.*)/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "005 | Stitch collar lining to upper",
+          "value": "imp_005_48973ecb-9971-"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "bb8837e5-4422-4bb8-ba5f-22025da64379"
+        },
+        "definition": "select concat(c.process_no, ' | ', c.process_desc, '#', c.process_id) as process\n\tfrom qmgt_rdb.tls_gf_inspection a\n\tinner join qmgt_rdb.tls_gf_inspection_defect b on a.tls_inspection_id = b.tls_inspection_id \n\tinner join qmgt_rdb.cfg_gf_process c on a.process_id = c.process_id \n  \tinner join qmgt_rdb.cfg_gf_fact_process d on a.fact_no_merge = d.fact_no_merge and c.process_id = d.process_id\n\tinner join qmgt_rdb.cfg_mes_gf_aopgroupctrl e on a.opgroup_id = e.opgroup_id and a.fact_no_merge = e.fact_no_merge and d.line_type = e.line_type \nwhere a.fact_no_merge = '$factory'\n\tand a.inspection_date between '${__from:date:YYYYMMDD}' and '${__to:date:YYYYMMDD}'\n\tand a.defect_qty <> 0 \n\tand c.\"enable\" = 'Y'\n\tand d.\"enable\" = 'Y'\n\tand e.\"enable\" = 'Y'\n\tand e.mainlineno = '$sec_no'\ngroup by c.process_no, c.process_desc, c.process_id \norder by c.process_no asc;",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Process",
+        "multi": false,
+        "name": "process",
+        "options": [],
+        "query": "select concat(c.process_no, ' | ', c.process_desc, '#', c.process_id) as process\n\tfrom qmgt_rdb.tls_gf_inspection a\n\tinner join qmgt_rdb.tls_gf_inspection_defect b on a.tls_inspection_id = b.tls_inspection_id \n\tinner join qmgt_rdb.cfg_gf_process c on a.process_id = c.process_id \n  \tinner join qmgt_rdb.cfg_gf_fact_process d on a.fact_no_merge = d.fact_no_merge and c.process_id = d.process_id\n\tinner join qmgt_rdb.cfg_mes_gf_aopgroupctrl e on a.opgroup_id = e.opgroup_id and a.fact_no_merge = e.fact_no_merge and d.line_type = e.line_type \nwhere a.fact_no_merge = '$factory'\n\tand a.inspection_date between '${__from:date:YYYYMMDD}' and '${__to:date:YYYYMMDD}'\n\tand a.defect_qty <> 0 \n\tand c.\"enable\" = 'Y'\n\tand d.\"enable\" = 'Y'\n\tand e.\"enable\" = 'Y'\n\tand e.mainlineno = '$sec_no'\ngroup by c.process_no, c.process_desc, c.process_id \norder by c.process_no asc;",
+        "refresh": 2,
+        "regex": "/(?<text>.*)#(?<value>.*)/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "TLS 2.0 A-2",
+  "uid": "eqKR_b94k",
+  "version": 47,
+  "weekStart": ""
+}

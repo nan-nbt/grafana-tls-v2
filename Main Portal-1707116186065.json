@@ -1,0 +1,124 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 8,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<script>\n  let userRole = window.grafanaBootData.user.orgRole;\n\n  if (userRole != 'Admin') {\n    let breadcrumbs = document.querySelector('[aria-label=\"Breadcrumbs\"]');\n    let toggle = document.querySelector('[aria-label=\"Toggle menu\"]');\n    let markFavoriteIcon = document.querySelector('[aria-label=\"Mark as favorite\"]');\n    let shareIcon = document.querySelector('[aria-label=\"Share dashboard or panel\"]');\n    //hard coce..\n    let headerBlocks = document.querySelectorAll('[data-testid=\"wrapper\"]');\n\n    //hide dom if exists\n    if (breadcrumbs){\n      breadcrumbs.style.display = 'none';\n    }\n    if (toggle) {\n      toggle.style.display = 'none';\n    }\n    if (markFavoriteIcon) {\n      markFavoriteIcon.style.display = 'none';\n    }\n    if (shareIcon){\n      shareIcon.style.display = 'none';\n    }\n\n    if (headerBlocks.length > 0) {\n      //keep dom's space\n      headerBlocks[1].style.visibility = 'hidden';\n    }\n  }\n</script>\n\n<!-- <script>\n  const email = '${__user.email}';\n\n  if (email !== 'admin@localhost') {\n    let breadcrumbs = document.querySelector('[aria-label=\"Breadcrumbs\"]');\n    let toggle = document.querySelector('[aria-label=\"Toggle menu\"]');\n\n    if (breadcrumbs) {\n      breadcrumbs.style.display = '';    \n    }\n\n    if (toggle) {\n      toggle.style.display = '';\n    }\n  }  \n</script> -->",
+        "mode": "html"
+      },
+      "pluginVersion": "10.1.2",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "d35b1763-fe1a-425a-81d1-af3305303af0"
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 1,
+      "options": {
+        "content": "<style>\r\n  .grid {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));\r\n    gap: 20px;\r\n    padding: 10px;\r\n  }\r\n\r\n  .card {\r\n    background: linear-gradient(45deg, #000000, #414141);\r\n    background-clip: border-box;\r\n    color: #fff;\r\n    border-radius: 20px;\r\n    padding: 5px;\r\n    transition: transform 0.3s ease-in-out;\r\n    width: 250px;\r\n    height: 250px;\r\n  }\r\n\r\n  .card:hover {\r\n    transform: scale(1.05);\r\n  }\r\n\r\n  .card img {\r\n    border-radius: 20px;\r\n  }\r\n</style>\r\n\r\n<div class=\"grid\">\r\n  {{#each data}}\r\n  <!-- <a class=\"card\" href=\"{{url}}\" target=\"_{{entre_id}}\"> -->\r\n  <a class=\"card\" href=\"{{board_url}}\">\r\n    <img src=\"{{board_icon_uri}}\" alt=\"{{board_name}}\" width=\"100%\" />\r\n  </a>\r\n  {{/each}}\r\n</div>",
+        "defaultContent": "<!-- The query didn't return any results. -->\r\n\r\n<style>\r\n  .error-container {\r\n    padding: 20px;\r\n    border: 1px solid white;\r\n    border-radius: 10px;\r\n    text-align: center;\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n  }\r\n\r\n  .error-icon {\r\n    width: 100px;\r\n    height: 100px;\r\n  }\r\n\r\n  .error-code {\r\n    font-size: 72px;\r\n    font-weight: bold;\r\n    color: #e74c3c;\r\n  }\r\n\r\n  .error-message {\r\n    font-size: 24px;\r\n  }\r\n</style>\r\n\r\n<div class=\"error-container\">\r\n  <div class=\"error-icon\">\r\n    <?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n    <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->\r\n    <svg fill=\"#000000\" viewBox=\"0 0 24 24\" id=\"warning-alt\" data-name=\"Flat Line\" xmlns=\"http://www.w3.org/2000/svg\"\r\n      class=\"icon flat-line\">\r\n      <path id=\"secondary\"\r\n        d=\"M10.25,4.19,2.63,18a2,2,0,0,0,1.75,3H19.62a2,2,0,0,0,1.75-3L13.75,4.19A2,2,0,0,0,10.25,4.19Z\"\r\n        style=\"fill: rgb(252, 186, 3); stroke-width: 2;\"></path>\r\n      <line id=\"primary-upstroke\" x1=\"12.05\" y1=\"17\" x2=\"11.95\" y2=\"17\"\r\n        style=\"fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.5;\">\r\n      </line>\r\n      <path id=\"primary\"\r\n        d=\"M12,9v4M10.25,4.19,2.63,18a2,2,0,0,0,1.75,3H19.62a2,2,0,0,0,1.75-3L13.75,4.19A2,2,0,0,0,10.25,4.19Z\"\r\n        style=\"fill: none; stroke: rgb(0, 0, 0); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;\">\r\n      </path>\r\n    </svg>\r\n  </div>\r\n  <div class=\"error-code\">403</div>\r\n  <div class=\"error-message\">\r\n    <span>Forbidden - You do not have access to this dashboard.</span>\r\n  </div>\r\n</div>",
+        "editor": {
+          "format": "auto",
+          "height": 400,
+          "language": "html"
+        },
+        "everyRow": false,
+        "helpers": ""
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "d35b1763-fe1a-425a-81d1-af3305303af0"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "WITH RECURSIVE CTE_TREE_BOARD AS (\r\n    SELECT CB.BOARD_ID, CB.BOARD_NO, CB.BOARD_NAME, CB.BOARD_URL, CB.BOARD_ICON_URI, CB.BOARD_LEVEL, CB.BOARD_PID, CB.ENABLED\r\n    FROM CFG_BOARD CB\r\n    INNER JOIN CFG_AUTH_BOARD CAB ON CAB.BOARD_ID=CB.BOARD_ID\r\n    INNER JOIN CFG_GROUP CG ON CG.GROUP_ID=CAB.GROUP_ID\r\n    WHERE CB.LEAF_NODE='Y' AND EXISTS (\r\n    \tSELECT * FROM CFG_GROUP_MEMBER CGM\r\n    \tWHERE CGM.GROUP_ID=CG.GROUP_ID AND CGM.USER_PCCUID='${__user.login}'\r\n      UNION ALL\r\n    \tSELECT * FROM CFG_GROUP_MGR CGM\r\n    \tWHERE CGM.GROUP_ID=CG.GROUP_ID AND CGM.USER_PCCUID='${__user.login}'\r\n    )\r\n  UNION\r\n    SELECT CB.BOARD_ID, CB.BOARD_NO, CB.BOARD_NAME, CB.BOARD_URL, CB.BOARD_ICON_URI, CB.BOARD_LEVEL, CB.BOARD_PID, CB.ENABLED\r\n    FROM CFG_BOARD CB\r\n    INNER JOIN CTE_TREE_BOARD CTB ON CTB.BOARD_PID=CB.BOARD_ID\r\n)\r\nSELECT * FROM CTE_TREE_BOARD\r\nWHERE BOARD_LEVEL=0 AND ENABLED='Y'\r\nORDER BY BOARD_NO",
+          "refId": "ENTRANCE",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Main Portal",
+      "type": "marcusolsson-dynamictext-panel"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Main Portal",
+  "uid": "af6b8102-0bf4-4b41-9da7-0801db25d862",
+  "version": 13,
+  "weekStart": ""
+}
